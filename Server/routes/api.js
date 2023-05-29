@@ -24,19 +24,32 @@ router.get('/' , async (req , res) => {
 
 
 router.post('/register' , async (req , res) =>{
-    let data = req.body;
-    let conn = await getConnection()    
-    let query = conn.insertOne({"email" : data.email , "password" : data.password})
-    if((await query).acknowledged) {
-        res.status(200).send("Succes")
-    }
-    else
+    let userdata = req.body;
+    let conn = await getConnection()   
+    let data = await readData();
+    let iCnt = 0;
+    for (iCnt = 0; iCnt<data.length; iCnt++)
     {
-        res.status(400).send("Failed")
+        if(data[iCnt].email == userdata.email )
+        {
+            res.status(400).send("Already register with that email..")
+            break;
+        }
+    } 
+    if (iCnt == data.length)
+    {
+        let query = conn.insertOne({"email" : userdata.email , "password" : userdata.password})
+        if((await query).acknowledged) {
+            res.status(200).send("Succes")
+        }
+        else
+        {
+            res.status(400).send("Failed to Inser data")
+        }
     }
 
 })
-
+// Login Component
 router.post( '/login' , async (req ,res) => {
     let conn = await getConnection();
     let data = req.body;
