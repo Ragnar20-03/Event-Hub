@@ -5,7 +5,9 @@ const {MongoClient} = require ('mongodb');
 const URL = "mongodb://127.0.0.1:27017"
 const client = new MongoClient(URL)
 
-async function getConnection(){
+// ///////////////////////////////////////////////////////
+// Connection Methods to  different Collections
+async function getConnectionUser(){
     let result = await client.connect();
     if(!result)
     {
@@ -13,20 +15,47 @@ async function getConnection(){
     }
     else
     {
-        let db = result.db("EventHub");
-        return db.collection("users");       
+           let db = result.db("EventHub");
+            return db.collection("users")
+    }
+}
+async function getConnectionEvents(){
+    let result = await client.connect();
+    if(!result)
+    {
+        console.log("Error to Connect With MongoDB");
+    }
+    else
+    {
+           let db = result.db("EventHub");
+            return db.collection("events")
     }
 }
 
+async function getConnectionSpecialEvents(){
+    let result = await client.connect();
+    if(!result)
+    {
+        console.log("Error to Connect With MongoDB");
+    }
+    else
+    {
+           let db = result.db("EventHub");
+            return db.collection("specialevents")
+    }
+}
+
+///////////////////////////////////////////
+
 router.get('/' , async (req , res) => {
-    res.send(await readData());
+    res.send(await readDataUser());
 })
 
-
+// Register Component
 router.post('/register' , async (req , res) =>{
     let userdata = req.body;
     let conn = await getConnection()   
-    let data = await readData();
+    let data = await readDataUser();
     let iCnt = 0;
     for (iCnt = 0; iCnt<data.length; iCnt++)
     {
@@ -78,12 +107,38 @@ router.post( '/login' , async (req ,res) => {
     }
 } )
 
+// '/events' Component
+router.get( '/events' , async( req , res) => {
+    res.send(await readDataEvents());
+})
+
+router.get( '/SpecialEvents' , async( req , res) => {
+    res.send(await readDataSpecialEvents());
+})
+
+
+//  ///////////////////////////////
 module.exports = router
+//  ///////////////////////////////
 
 
+// //////////////////////////////////
+// Read data from database for different components
 
-async function readData(){
-    let result = await  getConnection();
+async function readDataUser(){
+    let result = await  getConnectionUser();
     let data = result.find({}).toArray();
     return data;
 }
+async function readDataEvents(){
+    let result = await  getConnectionEvents();
+    let data = result.find({}).toArray();
+    return data;
+}
+async function readDataSpecialEvents(){
+    let result = await  getConnectionSpecialEvents();
+    let data = result.find({}).toArray();
+    return data;
+}
+
+// //////////////////////////////////
