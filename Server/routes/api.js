@@ -5,6 +5,11 @@ const {MongoClient} = require ('mongodb');
 const URL = "mongodb://127.0.0.1:27017"
 const client = new MongoClient(URL)
 
+const cors = require('cors');
+router.use(cors())
+
+const jwt = require('jsonwebtoken')
+
 // ///////////////////////////////////////////////////////
 // Connection Methods to  different Collections
 async function getConnectionUser(){
@@ -54,7 +59,7 @@ router.get('/' , async (req , res) => {
 // Register Component
 router.post('/register' , async (req , res) =>{
     let userdata = req.body;
-    let conn = await getConnection()   
+    let conn = await getConnectionUser()   
     let data = await readDataUser();
     let iCnt = 0;
     for (iCnt = 0; iCnt<data.length; iCnt++)
@@ -68,8 +73,17 @@ router.post('/register' , async (req , res) =>{
     if (iCnt == data.length)
     {
         let query = conn.insertOne({"email" : userdata.email , "password" : userdata.password})
+        
         if((await query).acknowledged) {
-            res.status(200).send("Succes")
+
+            // For Creating JWT token
+            let conn = await getConnectionUser();
+            let data = await conn.findOne({"email" : userdata.email})
+            
+            let payload = {subject :data._id }
+            let token = jwt.sign( payload , 'MahaDev' )
+            
+            res.status(200).send({token})
         }
         else
         {
@@ -80,23 +94,29 @@ router.post('/register' , async (req , res) =>{
 })
 // Login Component
 router.post( '/login' , async (req ,res) => {
-    let conn = await getConnection();
-    let data = req.body;
+    let conn = await getConnectionUser();
+    let userData = req.body;
 
     let query = await conn.find({}).toArray();
-    console.log(query);
     let iCnt= 0;
     for (iCnt = 0 ; iCnt< query.length; iCnt++)
     {
-        if(query[iCnt].email == data.email)
+        if(query[iCnt].email == userData.email)
         {
-            if(query[iCnt].password == data.password)
+            if(query[iCnt].password == userData.password)
             {
-                res.status(200).send("Password and email Match Success")
+                let conn = await getConnectionUser();
+                let data  = await conn.findOne({email: userData.email })
+
+                let payload = {subject : data._id};
+                let token = jwt.sign(payload , 'MahaDev')
+                res.status(200).send({token})
+             
             }
             else
             {
-                res.status(402).send("Password Doesnt match")
+                res.status(402).send("Password Doesnt match");
+                break;
             }
             break;
         }     
@@ -131,7 +151,7 @@ async function readDataUser(){
     return data;
 }
 async function readDataEvents(){
-    let result = await  getConnectionEvents();
+    let result = await getConnectionEvents();
     let data = result.find({}).toArray();
     return data;
 }
