@@ -1,6 +1,11 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+const api = require('./Routes/api');
+
+app.use(bodyParser.json());
+app.use('/api' , api);
 
 const PORT = 5100;
 
