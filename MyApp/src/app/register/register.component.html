@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col ms-3">
+        <div class="card text-bg-light mb-3 pt-5" >
+            <div class="card-header">Register</div>
+            <div class="card-body">
+                <form class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Username</label>
+                        <input type="text"  [(ngModel)]="registerData.username"  class="form-control" name="username" id="username" placeholder="Password">
+                      </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Password</label>
+                        <input type="password" [(ngModel)]="registerData.password" class="form-control" name="username" id="password" placeholder="Password">
+                      </div>
+                    <button (click)="onRegister()" type="submit"  class="btn btn-primary mb-2 pt-2 m-3">Register</button>
+                  </form>
+            </div>
+          </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+
+<div class="row">
+    <div class="col-sm-4 pt-5 "  *ngFor="let e of events ; let i = index">
+        
+        <div class="card text-center" >
+            <div class="card-header">
+                {{i + 1}}   {{e.name}}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">{{e.Teacher}}</p>
+              <a href="#" class="btn btn-primary">Book</a>
+            </div>
+            <div class="card-footer text-body-secondary">
+              {{e.description}}
+            </div>
+          </div>
+    </div>
+  </div>
