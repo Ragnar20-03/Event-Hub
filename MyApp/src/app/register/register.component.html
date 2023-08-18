@@ -13,6 +13,12 @@
                         <input type="password" [(ngModel)]="registerData.password" class="form-control" name="username" id="password" placeholder="Password">
                       </div>
                     <button (click)="onRegister()" type="submit"  class="btn btn-primary mb-2 pt-2 m-3">Register</button>
+                    <div class="alert alert-success" role="alert">
+                      <h4 class="alert-heading">Already have account !  !</h4>
+                      <p><a href="" routerLink="/login" routerLinkActive = "active">Click here to Login ..</a></p>
+                      <hr>
+                    </div>
+
                   </form>
             </div>
           </div>

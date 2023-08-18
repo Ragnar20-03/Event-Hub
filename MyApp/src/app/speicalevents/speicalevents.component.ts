@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetEventsService } from '../get-events.service';
 import { HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 GetEventsService
 
 @Component({
@@ -12,7 +13,7 @@ export class SpeicaleventsComponent implements OnInit {
 
   events: any = []
 
-  constructor(public eobj: GetEventsService) { }
+  constructor( public router : Router ,  public eobj: GetEventsService) { }
 
   ngOnInit() {
     this.eobj.getSpeicalEvents().subscribe({
@@ -22,6 +23,7 @@ export class SpeicaleventsComponent implements OnInit {
           if (err.status == 401)
           {
             alert ("Authantication Failed ! , please login !" )
+            this.router.navigate(['/login'])
           }
         }
       }
