@@ -14,12 +14,18 @@
         <li class="nav-item">
           <a class="nav-link"  routerLink="/special" routerLinkActive="active"  href="#">Special</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!aobj.isLoggedin()">
           <a class="nav-link"  routerLink="/login"  routerLinkActive="active"  href="#">Login</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!aobj.isLoggedin()">
           <a class="nav-link" routerLink="/register" routerLinkActive="active" href="#">Register</a>
         </li>
+
+        <li class="nav-item" *ngIf="aobj.isLoggedin()">
+          <a class="nav-link" (click)="aobj.logoutUser()" href="#">Logut</a>
+        </li>
+        
+
 
       </ul>
     </div>

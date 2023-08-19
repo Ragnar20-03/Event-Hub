@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthServiceService {
   private _rurl = "http://localhost:5100/api/register"
   private _lurl = "http://localhost:5100/api/login"
 
-  constructor(public hobj : HttpClient) { }
+  constructor( public router : Router , public hobj : HttpClient) { }
   
 
   Register(registerData : any)
@@ -26,6 +27,12 @@ export class AuthServiceService {
   {
     return !!localStorage.getItem('token')
   }
+
+  logoutUser(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/login'])
+  }
+  
 
   getToken()
   {

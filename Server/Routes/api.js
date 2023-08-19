@@ -23,25 +23,19 @@ const jwt = require('jsonwebtoken');
     }
     console.log("inside verify 1");
 
-    try{
+    
         let payLoad = jwt.verify(token , 'EventHub')
         if (!payLoad)
         {
             return   res.status(401).send("Unauthorized Request")
         }
+        req.username = payLoad.subject
+        // console.log(username);
+        next();
     
-    }catch (err){
-        console.log("----------------------------------");
-        return   res.status(401).send("Unauthorized Request")
-        console.log(err);
+    
         
     }
-
-    req.username = payLoad.subject
-    console.log(username);
-    next();
-
-}
 
 
 async function getConnection( params) {
