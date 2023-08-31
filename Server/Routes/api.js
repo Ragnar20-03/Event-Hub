@@ -31,7 +31,8 @@ const jwt = require('jsonwebtoken');
         }
         req.username = payLoad.subject
         // console.log(username);
-        next();        
+        next();
+        
     }
 
 
@@ -138,10 +139,6 @@ router.get('/', (req, res) => {
     res.send("Hello from api")
 })
 
-if (
-    getConnection(1))
-    {
-        console.log("Connection started");
-    };
+
 
 module.exports = router
