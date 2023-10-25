@@ -1,0 +1,21 @@
+
+
+<div class="login">
+      <label for="fname" class="">First Name</label>
+      <input type="text" [(ngModel)]="registerData.fname" class="form-control" id="password">
+      <label for="lname" class="">Last Name</label>
+      <input type="text" [(ngModel)]="registerData.lname" class="form-control" id="password">
+      <label for="pn" class="">Ph. No</label>
+      <input type="number" [(ngModel)]="registerData.pn" class="form-control" id="password">
+
+    <label for="isername" class="">User Name  </label>
+      <input type="text" [(ngModel)]="registerData.username" class="form-control" id="username">
+
+      <label for="password" class="">Password</label>
+      <input type="password" [(ngModel)]="registerData.password" class="form-control" id="password">
+
+      <div>
+            <button (click)="onRegister()">Register</button>
+      </div>
+
+</div>

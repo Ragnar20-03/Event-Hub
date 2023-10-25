@@ -1,0 +1,29 @@
+.login{
+    padding: 10px;
+    position: relative;
+    width: 30%;
+    left: 40%;
+    top: 10%;
+    border: solid;
+    border-width: 3px;
+    border-color: rgb(146, 153, 160);
+    border-top: px;
+    border-radius: 10px;
+}
+input{
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 90%;
+}
+button{
+    margin: 10px;
+    padding: 10px;
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+}
+label{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+}
